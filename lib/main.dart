@@ -15,7 +15,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Text('helo'),
+      home: Text(
+        'hello',
+        style: TextStyle(color: Colors.amber),
+      ),
     );
   }
 }
