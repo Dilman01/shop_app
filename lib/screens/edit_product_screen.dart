@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields, unused_local_variable, prefer_const_literals_to_create_immutables, invalid_return_type_for_catch_error
+// ignore_for_file: prefer_const_constructors, prefer_final_fields, unused_local_variable, prefer_const_literals_to_create_immutables, invalid_return_type_for_catch_error, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -85,7 +85,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     final isValid = _form.currentState!.validate();
 
     if (!isValid) {
@@ -98,16 +98,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
     });
 
     if (_editedProduct.id != '') {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-      setState(() {
-        _isLoading = false;
-      });
     } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedProduct)
-          .catchError((error) {
-        return showDialog<Null>(
+      try {
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
+      } catch (e) {
+        await showDialog<Null>(
             context: context,
             builder: (ctx) => AlertDialog(
                   title: Text('An Error Occurred'),
@@ -117,20 +115,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       child: Text('Okay'),
                       onPressed: () {
                         Navigator.of(ctx).pop();
-                        setState(() {
-                          _isLoading = false;
-                        });
                       },
                     ),
                   ],
                 ));
-      }).then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
-      });
+      }
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
