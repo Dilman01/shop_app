@@ -80,6 +80,10 @@ class Products with ChangeNotifier {
 
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
+
+      if (extractedData == null) {
+        return;
+      }
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(
           Product(
@@ -171,19 +175,5 @@ class Products with ChangeNotifier {
       throw HttpException('Could not delete product.');
     }
     existingProduct = null;
-
-    // final exsistingProductIndex = _items.indexWhere((prod) => prod.id == id);
-    // Product? existingProduct = _items[exsistingProductIndex];
-
-    // http.delete(url).then((response) {
-    //   if (response.statusCode >= 400) {}
-    //   existingProduct = null;
-    // }).catchError((_) {
-    //   _items.insert(exsistingProductIndex, existingProduct!);
-    //   notifyListeners();
-    // });
-    // _items.removeAt(exsistingProductIndex);
-    // notifyListeners();
-    // _items.removeWhere((prod) => prod.id == id);
   }
 }
