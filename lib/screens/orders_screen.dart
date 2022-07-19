@@ -24,18 +24,22 @@ class OrdersScreen extends StatelessWidget {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else {
-            if (dataSnapshot.error != null) {
-              return Center(
-                child: Text('An Error Occured'),
-              );
-            } else {
-              return Consumer<Orders>(
-                builder: (context, orderData, child) => ListView.builder(
-                  itemCount: orderData.orders.length,
-                  itemBuilder: (ctx, index) =>
-                      OrderItem(orderData.orders[index]),
-                ),
-              );
+            try {
+              if (dataSnapshot.error != null) {
+                return Center(
+                  child: Text('An Error Occured'),
+                );
+              } else {
+                return Consumer<Orders>(
+                  builder: (context, orderData, child) => ListView.builder(
+                    itemCount: orderData.orders.length,
+                    itemBuilder: (ctx, index) =>
+                        OrderItem(orderData.orders[index]),
+                  ),
+                );
+              }
+            } catch (e) {
+              throw e;
             }
           }
         },
