@@ -47,8 +47,9 @@ class Products with ChangeNotifier {
   // var _showFavoritesOnly = false;
 
   final String authToken;
+  final String userId;
 
-  Products(this.authToken, this._items);
+  Products(this.authToken, this.userId, this._items);
 
   List<Product> get itmes {
     // if (_showFavoritesOnly) {
@@ -79,7 +80,7 @@ class Products with ChangeNotifier {
     // final url = Uri.https('flutter-update-16498-default-rtdb.firebaseio.com',
     //     '/products.json?auth=$authToken');
 
-    final url = Uri.parse(
+    var url = Uri.parse(
         'https://flutter-update-16498-default-rtdb.firebaseio.com/products.json?auth=$authToken');
 
     try {
@@ -91,6 +92,12 @@ class Products with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+      url = Uri.parse(
+          'https://flutter-update-16498-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken');
+
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
+
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(
           Product(
@@ -99,7 +106,8 @@ class Products with ChangeNotifier {
             description: prodData['description'],
             imageUrl: prodData['imageUrl'],
             price: prodData['price'],
-            isFavorite: prodData['isFavorite'],
+            isFavorite:
+                favoriteData == null ? false : favoriteData[prodId] ?? false,
           ),
         );
       });
@@ -125,7 +133,7 @@ class Products with ChangeNotifier {
           'description': product.description,
           'imageUrl': product.imageUrl,
           'price': product.price,
-          'isFavorite': product.isFavorite,
+          // 'isFavorite': product.isFavorite,
         }),
       );
 
