@@ -43,4 +43,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+<<<<<<< HEAD
 /lib/models/base.dart
+=======
+/lib/models/base.dart
+>>>>>>> adf6bead20c3d80f0c515431d79e0dcb4c6437d6
