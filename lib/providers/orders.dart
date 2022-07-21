@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shop_app/providers/cart.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/base.dart';
+import '../base/base.dart';
 
 class OrderItem {
   final String id;

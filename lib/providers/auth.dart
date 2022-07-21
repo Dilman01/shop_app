@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:shop_app/models/base.dart';
+import '../base/base.dart';
 import '../models/http_exeption.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

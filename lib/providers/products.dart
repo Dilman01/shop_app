@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:shop_app/models/base.dart';
+import 'package:shop_app/base/base.dart';
 
 import 'product.dart';
 import '../models/http_exeption.dart';
