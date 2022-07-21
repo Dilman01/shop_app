@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/screens/edit_product_screen.dart';
@@ -18,14 +16,12 @@ class UserProducsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final productsData = Provider.of<Products>(context);
-    print('rebuilding....');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Products'),
+        title: const Text('Your Products'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).pushNamed(EditProductScreen.routeName);
             },
@@ -37,14 +33,14 @@ class UserProducsScreen extends StatelessWidget {
         future: _refreshProducts(context),
         builder: (ctx, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(),
                   )
                 : RefreshIndicator(
                     onRefresh: () => _refreshProducts(context),
                     child: Consumer<Products>(
                       builder: (ctx, productsData, _) => Padding(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         child: ListView.builder(
                           itemCount: productsData.itmes.length,
                           itemBuilder: (_, index) => Column(
@@ -54,7 +50,7 @@ class UserProducsScreen extends StatelessWidget {
                                 productsData.itmes[index].title,
                                 productsData.itmes[index].imageUrl,
                               ),
-                              Divider(),
+                              const Divider(),
                             ],
                           ),
                         ),

@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:shop_app/providers/cart.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/base.dart';
+
 class OrderItem {
   final String id;
   final double amount;
@@ -24,6 +26,8 @@ class Orders with ChangeNotifier {
   final String? authToken;
   final String? userId;
 
+  final _base = Base();
+
   Orders(this.authToken, this.userId, this._orders);
 
   List<OrderItem> get orders {
@@ -31,11 +35,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchAndSetOrders() async {
-    // final url = Uri.https('flutter-update-16498-default-rtdb.firebaseio.com',
-    //     '/orders.json?auth=$authToken');
-
-    final url = Uri.parse(
-        'https://flutter-update-16498-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken');
+    final url =
+        Uri.parse('${_base.baseUrl}/orders/$userId.json?auth=$authToken');
 
     try {
       final response = await http.get(url);
@@ -74,11 +75,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> addOrders(List<CartItem> cartProducts, double total) async {
-    // final url = Uri.https('flutter-update-16498-default-rtdb.firebaseio.com',
-    //     '/orders.json?auth=$authToken');
-
-    final url = Uri.parse(
-        'https://flutter-update-16498-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken');
+    final url =
+        Uri.parse('${_base.baseUrl}/orders/$userId.json?auth=$authToken');
 
     try {
       final timestamp = DateTime.now();

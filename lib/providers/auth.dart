@@ -1,10 +1,9 @@
-// ignore_for_file: empty_catches, use_rethrow_when_possible, unused_local_variable, unused_field
-
 import 'dart:convert';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop_app/models/base.dart';
 import '../models/http_exeption.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +12,8 @@ class Auth with ChangeNotifier {
   DateTime? _expiryDate;
   String? _userId;
   Timer? _authTimer;
+
+  final _base = Base();
 
   bool get isAuth {
     return token != null;
@@ -34,7 +35,7 @@ class Auth with ChangeNotifier {
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
     final url = Uri.parse(
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyAoRdLPqQX-lbm8NzuUVpi89bkjhb9e6pQ');
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=${_base.apiKey}');
 
     try {
       final response = await http.post(
@@ -61,7 +62,7 @@ class Auth with ChangeNotifier {
       notifyListeners();
 
       final prefs = await SharedPreferences.getInstance();
-      // ignore: unnecessary_nullable_for_final_variable_declarations
+
       final userData = json.encode({
         'token': _token,
         'userId': _userId,
@@ -69,7 +70,6 @@ class Auth with ChangeNotifier {
       });
       prefs.setString('userData', userData);
     } catch (e) {
-      print(e);
       throw e;
     }
   }
@@ -115,7 +115,7 @@ class Auth with ChangeNotifier {
     }
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
-    // prefs.remove('userData');
+
     prefs.clear();
   }
 

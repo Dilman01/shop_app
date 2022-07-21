@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields, unused_local_variable, prefer_const_literals_to_create_immutables, invalid_return_type_for_catch_error, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/providers/product.dart';
@@ -18,7 +16,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
-  // ignore: prefer_final_fields
+
   Product _editedProduct = Product(
     id: '',
     title: '',
@@ -108,11 +106,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
         await showDialog<Null>(
             context: context,
             builder: (ctx) => AlertDialog(
-                  title: Text('An Error Occurred'),
-                  content: Text('Something went wrong'),
+                  title: const Text('An Error Occurred'),
+                  content: const Text('Something went wrong'),
                   actions: [
                     TextButton(
-                      child: Text('Okay'),
+                      child: const Text('Okay'),
                       onPressed: () {
                         Navigator.of(ctx).pop();
                       },
@@ -131,16 +129,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: const Text('Edit Product'),
         actions: [
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: _saveForm,
           ),
         ],
       ),
       body: _isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Padding(
@@ -151,7 +149,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   children: [
                     TextFormField(
                       initialValue: _initValues['title'],
-                      decoration: InputDecoration(labelText: 'Title'),
+                      decoration: const InputDecoration(labelText: 'Title'),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_priceFocusNode);
@@ -175,7 +173,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     TextFormField(
                       initialValue: _initValues['price'],
-                      decoration: InputDecoration(labelText: 'Price'),
+                      decoration: const InputDecoration(labelText: 'Price'),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
                       focusNode: _priceFocusNode,
@@ -208,7 +206,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     TextFormField(
                       initialValue: _initValues['description'],
-                      decoration: InputDecoration(labelText: 'Description'),
+                      decoration:
+                          const InputDecoration(labelText: 'Description'),
                       maxLines: 3,
                       focusNode: _descriptionFocusNode,
                       keyboardType: TextInputType.multiline,
@@ -238,7 +237,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         Container(
                           width: 100,
                           height: 100,
-                          margin: EdgeInsets.only(top: 8, right: 10),
+                          margin: const EdgeInsets.only(top: 8, right: 10),
                           decoration: BoxDecoration(
                             border: Border.all(
                               width: 1,
@@ -246,7 +245,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             ),
                           ),
                           child: _imageUrlController.text.isEmpty
-                              ? Text('Enter a URL')
+                              ? const Text('Enter a URL')
                               : FittedBox(
                                   child: Image.network(
                                     _imageUrlController.text,
@@ -257,7 +256,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         Expanded(
                             child: TextFormField(
                           // initialValue: _initValues['imageUrl'],
-                          decoration: InputDecoration(labelText: 'Image URL'),
+                          decoration:
+                              const InputDecoration(labelText: 'Image URL'),
                           keyboardType: TextInputType.url,
                           textInputAction: TextInputAction.done,
                           controller: _imageUrlController,
