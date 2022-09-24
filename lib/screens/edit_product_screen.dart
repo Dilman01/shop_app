@@ -6,6 +6,8 @@ import 'package:shop_app/providers/products.dart';
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
 
+  const EditProductScreen({super.key});
+
   @override
   State<EditProductScreen> createState() => _EditProductScreenState();
 }
@@ -255,7 +257,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         ),
                         Expanded(
                             child: TextFormField(
-                          // initialValue: _initValues['imageUrl'],
                           decoration:
                               const InputDecoration(labelText: 'Image URL'),
                           keyboardType: TextInputType.url,
