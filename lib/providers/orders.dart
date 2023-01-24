@@ -44,10 +44,6 @@ class Orders with ChangeNotifier {
       final List<OrderItem> loadedOrders = [];
       final extraxtedData = json.decode(response.body) as Map<String, dynamic>;
 
-      if (extraxtedData == null) {
-        return;
-      }
-
       extraxtedData.forEach((orderId, orderData) {
         loadedOrders.add(OrderItem(
           id: orderId,
@@ -70,7 +66,7 @@ class Orders with ChangeNotifier {
       _orders = loadedOrders.reversed.toList();
       notifyListeners();
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -105,7 +101,7 @@ class Orders with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

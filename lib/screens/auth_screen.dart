@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/providers/auth.dart';
 import '../models/http_exeption.dart';
 
-enum AuthMode { Signup, Login }
+enum AuthMode { signup, login }
 
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
@@ -98,7 +98,7 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard>
     with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  AuthMode _authMode = AuthMode.Login;
+  AuthMode _authMode = AuthMode.login;
   final Map<String, String> _authData = {
     'email': '',
     'password': '',
@@ -123,10 +123,12 @@ class _AuthCardState extends State<AuthCard>
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, -1.5),
       end: const Offset(0, 0),
-    ).animate(CurvedAnimation(
-      parent: _controller!,
-      curve: Curves.fastOutSlowIn,
-    ));
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
 
     _opacityAnimation = Tween(
       begin: 0.0,
@@ -174,7 +176,7 @@ class _AuthCardState extends State<AuthCard>
     });
 
     try {
-      if (_authMode == AuthMode.Login) {
+      if (_authMode == AuthMode.login) {
         await Provider.of<Auth>(context, listen: false).login(
           _authData['email']!,
           _authData['password']!,
@@ -211,14 +213,14 @@ class _AuthCardState extends State<AuthCard>
   }
 
   void _switchAuthMode() {
-    if (_authMode == AuthMode.Login) {
+    if (_authMode == AuthMode.login) {
       setState(() {
-        _authMode = AuthMode.Signup;
+        _authMode = AuthMode.signup;
       });
       _controller!.forward();
     } else {
       setState(() {
-        _authMode = AuthMode.Login;
+        _authMode = AuthMode.login;
       });
       _controller!.reverse();
     }
@@ -235,9 +237,9 @@ class _AuthCardState extends State<AuthCard>
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
-        height: _authMode == AuthMode.Signup ? 320 : 260,
+        height: _authMode == AuthMode.signup ? 320 : 260,
         constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
+            BoxConstraints(minHeight: _authMode == AuthMode.signup ? 320 : 260),
         width: deviceSize.width * 0.75,
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -273,8 +275,8 @@ class _AuthCardState extends State<AuthCard>
                 ),
                 AnimatedContainer(
                   constraints: BoxConstraints(
-                    minHeight: _authMode == AuthMode.Signup ? 60 : 0,
-                    maxHeight: _authMode == AuthMode.Signup ? 120 : 0,
+                    minHeight: _authMode == AuthMode.signup ? 60 : 0,
+                    maxHeight: _authMode == AuthMode.signup ? 120 : 0,
                   ),
                   duration: const Duration(microseconds: 300),
                   curve: Curves.easeIn,
@@ -283,11 +285,11 @@ class _AuthCardState extends State<AuthCard>
                     child: SlideTransition(
                       position: _slideAnimation!,
                       child: TextFormField(
-                        enabled: _authMode == AuthMode.Signup,
+                        enabled: _authMode == AuthMode.signup,
                         decoration: const InputDecoration(
                             labelText: 'Confirm Password'),
                         obscureText: true,
-                        validator: _authMode == AuthMode.Signup
+                        validator: _authMode == AuthMode.signup
                             ? (value) {
                                 if (value != _passwordController.text) {
                                   return 'Passwords do not match!';
@@ -318,7 +320,7 @@ class _AuthCardState extends State<AuthCard>
                               Theme.of(context).primaryTextTheme.button!.color),
                     ),
                     child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                        Text(_authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP'),
                   ),
                 TextButton(
                   onPressed: _switchAuthMode,
@@ -329,7 +331,7 @@ class _AuthCardState extends State<AuthCard>
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   child: Text(
-                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                      '${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                 ),
               ],
             ),

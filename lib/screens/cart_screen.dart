@@ -97,7 +97,7 @@ class _OrderButtonState extends State<OrderButton> {
                   widget.cart.totalAmount,
                 );
               } catch (e) {
-                throw e;
+                rethrow;
               }
 
               setState(() {

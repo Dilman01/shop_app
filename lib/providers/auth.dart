@@ -70,7 +70,7 @@ class Auth with ChangeNotifier {
       });
       prefs.setString('userData', userData);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

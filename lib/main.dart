@@ -53,13 +53,15 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'MyShop',
           theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
+            primarySwatch: Colors.deepPurple,
+            accentColor: Colors.redAccent,
             fontFamily: 'Lato',
-            pageTransitionsTheme: PageTransitionsTheme(builders: {
-              TargetPlatform.android: CustomPageTransitionBuilder(),
-              TargetPlatform.iOS: CustomPageTransitionBuilder(),
-            }),
+            pageTransitionsTheme: PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: CustomPageTransitionBuilder(),
+                TargetPlatform.iOS: CustomPageTransitionBuilder(),
+              },
+            ),
           ),
           home: auth.isAuth
               ? const ProductsOverviewScreen()

@@ -39,7 +39,7 @@ class OrdersScreen extends StatelessWidget {
                 );
               }
             } catch (e) {
-              throw e;
+              rethrow;
             }
           }
         },
